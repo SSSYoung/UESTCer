@@ -6,6 +6,7 @@ import com.avos.avoscloud.SignUpCallback;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.exceptions.HyphenateException;
 
+import test.example.com.uestcer.presenter.RegistPresenter;
 import test.example.com.uestcer.utils.ThreadUtils;
 import test.example.com.uestcer.view.RegistView;
 

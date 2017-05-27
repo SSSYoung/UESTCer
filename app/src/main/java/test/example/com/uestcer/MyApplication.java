@@ -28,6 +28,7 @@ public class MyApplication extends Application {
         AVOSCloud.setDebugLogEnabled(true);
         //初始化数据库
         DBUtils.initDBUtils(this);
+
     }
 
 

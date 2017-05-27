@@ -17,7 +17,7 @@ import butterknife.InjectView;
 
 import butterknife.OnClick;
 import test.example.com.uestcer.R;
-import test.example.com.uestcer.presenter.impl.RegistPresenter;
+import test.example.com.uestcer.presenter.RegistPresenter;
 import test.example.com.uestcer.presenter.impl.RegistPresenterImpl;
 import test.example.com.uestcer.utils.StringUtils;
 

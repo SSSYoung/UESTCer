@@ -12,7 +12,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import test.example.com.uestcer.MainActivity;
 import test.example.com.uestcer.R;
-import test.example.com.uestcer.presenter.impl.SplashPresenter;
+import test.example.com.uestcer.presenter.SplashPresenter;
 import test.example.com.uestcer.presenter.impl.SplashPresenterImpl;
 
 /**

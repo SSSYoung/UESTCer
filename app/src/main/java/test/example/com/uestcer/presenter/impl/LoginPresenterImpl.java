@@ -4,6 +4,7 @@ import com.hyphenate.chat.EMClient;
 
 
 import test.example.com.uestcer.callback.MyEMCallBack;
+import test.example.com.uestcer.presenter.LoginPresenter;
 import test.example.com.uestcer.view.LoginView;
 
 /**

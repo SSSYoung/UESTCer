@@ -2,6 +2,7 @@ package test.example.com.uestcer.presenter.impl;
 
 import com.hyphenate.chat.EMClient;
 
+import test.example.com.uestcer.presenter.SplashPresenter;
 import test.example.com.uestcer.view.SplashView;
 
 /**

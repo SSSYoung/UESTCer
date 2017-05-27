@@ -23,7 +23,7 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import test.example.com.uestcer.MainActivity;
 import test.example.com.uestcer.R;
-import test.example.com.uestcer.presenter.impl.LoginPresenter;
+import test.example.com.uestcer.presenter.LoginPresenter;
 import test.example.com.uestcer.presenter.impl.LoginPresenterImpl;
 
 /**
