@@ -35,7 +35,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHo
     /**
      * 内部接口，抽象方法，实现点击，长按事件
      */
-    private interface OnItemClickListener {
+    public interface OnItemClickListener {
         void onclick(View v,String username);
         boolean onLongClick(View v,String username);
     }
