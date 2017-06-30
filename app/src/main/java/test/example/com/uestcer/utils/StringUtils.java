@@ -2,6 +2,9 @@ package test.example.com.uestcer.utils;
 
 import android.text.TextUtils;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by DK on 2017/4/27.
  */
@@ -40,5 +43,15 @@ public class StringUtils {
         }else{
             return text.substring(0,1).toUpperCase();
         }
+    }
+
+    /**
+     * 把日期格式化输出
+     * @param date
+     * @return
+     */
+    public static String getData(Date date) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        return format.format(date);
     }
 }

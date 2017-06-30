@@ -1,5 +1,6 @@
 package test.example.com.uestcer.db;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -24,7 +25,7 @@ public class DBUtils {
     }
 
     /**
-     *
+     *  初始化联系人，在数据库里面先去取
      * @param username
      * @return
      */
@@ -70,9 +71,17 @@ public class DBUtils {
                 //先把所有的联系人都删除
                 db.delete("contact_info","username=?",new String[]{username});
                 //再把环信返回的联系人都保存到数据库中
-
+                ContentValues values = new ContentValues();
+                values.put("username",username);
+                for (String contact:contacts){
+                    values.put("contact",contact);
+                    db.insert("contact_info",null,values);
+                }
+                //标记为成功
+                db.setTransactionSuccessful();
             }finally {
-
+                //结束，没有成功更改，数据会回滚
+                db.endTransaction();
             }
 
         }

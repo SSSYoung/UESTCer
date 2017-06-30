@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface ContactView {
     void onInitContact(List<String> contact);
-    void onUpdateContact(List<String> contact,boolean isUpdateSuccess);
+    void onUpdateContact(List<String> contact,boolean isUpdateSuccess,String error);
     void onDeleteContact(boolean isDeleteSuccess,String errorMsg);
 }

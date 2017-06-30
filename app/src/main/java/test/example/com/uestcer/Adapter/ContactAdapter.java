@@ -105,7 +105,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHo
     }
 
 
-    public class MyViewHolder extends RecyclerView.ViewHolder{
+    class MyViewHolder extends RecyclerView.ViewHolder{
         TextView tv_section;
         TextView tv_contact;
         //构造方法对控件初始化

@@ -67,20 +67,20 @@ public class ContactFragment extends BaseFragment implements ContactView{
         adapter.setOnItemClickListener(new ContactAdapter.OnItemClickListener() {
             @Override
             //单击和该联系人聊天
-            public void onclick(View v, String username) {
+            public void onclick(View v, String contactName) {
                 Intent intent = new Intent(getContext(), ChatActivity.class);
-                intent.putExtra("contact",username);
+                intent.putExtra("contact",contactName);
                 startActivity(intent);
 
             }
             //长按删除此联系人
             @Override
-            public boolean onLongClick(View v, final String username) {
-                Snackbar.make(contactLayout,"真的要删除"+username+"吗?",Snackbar.LENGTH_LONG)
+            public boolean onLongClick(View v, final String contactName) {
+                Snackbar.make(contactLayout,"真的要删除"+contactName+"吗?",Snackbar.LENGTH_LONG)
                         .setAction("确认", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                presenter.deleteContact(username);
+                                presenter.deleteContact(contactName);
                             }
                         }).show();
                 return true;
@@ -89,7 +89,7 @@ public class ContactFragment extends BaseFragment implements ContactView{
     }
 
     @Override
-    public void onUpdateContact(List<String> contact, boolean isUpdateSuccess) {
+    public void onUpdateContact(List<String> contact, boolean isUpdateSuccess ,String error) {
         contactLayout.setRefreshing(false);
         if (isUpdateSuccess){
             //更新adapter中的联系人数据
@@ -97,7 +97,8 @@ public class ContactFragment extends BaseFragment implements ContactView{
             //刷新界面
             adapter.notifyDataSetChanged();
         }else {
-            ToastUtils.showToast(getActivity(),"更新联系人失败");
+            //更新联系人失败了，adapter不变，弹出提示
+            ToastUtils.showToast(getActivity(),"更新联系人失败"+error);
         }
     }
 
@@ -111,42 +112,5 @@ public class ContactFragment extends BaseFragment implements ContactView{
     }
 
 
-    //    private ContactPresenter presenter;
-//
-//    @Nullable
-//    @Override
-//    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-//
-//        return inflater.inflate(R.layout.fragment_contact,null);
-//    }
-//
-//    @Override
-//    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-//        contactLayout = (ContactLayout) view.findViewById(R.id.contactlayout);
-//        presenter = new ContactPresenterImpl(this);
-//        //初始化联系人
-//        presenter.initContact();
-//        super.onViewCreated(view, savedInstanceState);
-//    }
-//
-//    /**
-//     * ContactView接口里面未实现的方法
-//     * @param contact
-//     */
-//    @Override
-//    public void onInitContact(List<String> contact) {
-//        //得到了联系人的数据，在UI中展示
-//        adapter = new ContactAdapter(contact);
-//
-//    }
-//
-//    @Override
-//    public void onUpdateContact(List<String> contact, boolean isUpdateSuccess) {
-//
-//    }
-//
-//    @Override
-//    public void onDeleteContact() {
-//
-//    }
+
 }

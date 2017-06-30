@@ -11,4 +11,10 @@ public interface ContactPresenter {
     void updateContact();
     //删除联系人
     void deleteContact(String username);
+
+    /**
+     * Created by oo on 2017/6/30.
+     */
+
+
 }
