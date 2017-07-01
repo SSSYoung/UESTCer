@@ -45,6 +45,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHo
      * @param contacts
      */
     public ContactAdapter(List<String> contacts){
+
         this.contacts=contacts;
     }
     @Override

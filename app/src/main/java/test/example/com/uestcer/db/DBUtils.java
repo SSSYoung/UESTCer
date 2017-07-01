@@ -26,7 +26,7 @@ public class DBUtils {
 
     /**
      *  初始化联系人，在数据库里面先去取
-     * @param username
+     * @param username 登录的用户名
      * @return
      */
     public static List<String> initContact(String username){

@@ -11,11 +11,11 @@ import java.util.List;
 public interface addFriendView {
     /**
      * 请求增加
-     * @param list
-     * @param users
+     * @param list 查询到的AVUser list
+     * @param savedUser 已经在用户数据库的联系人好友
      * @param isSuccess
      * @param errorMsg
      */
-    void onQuerySuccess(List<AVUser> list,List<String> users,boolean isSuccess,String errorMsg);
+    void onQuerySuccess(List<AVUser> list,List<String> savedUser,boolean isSuccess,String errorMsg);
     void onGetAddfriendResult(boolean isSuccess,String errorMsg);
 }

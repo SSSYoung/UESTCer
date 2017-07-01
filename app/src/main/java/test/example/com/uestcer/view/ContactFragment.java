@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,8 +43,10 @@ public class ContactFragment extends BaseFragment implements ContactView{
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         presenter=new ContactPresenterImpl(this);
-        presenter.initContact();
+        //犯得错误，contactLayout在present.initContact()之前
         contactLayout= (ContactLayout) view.findViewById(R.id.contactlayout);
+        presenter.initContact();
+
 
     }
 
@@ -57,6 +60,9 @@ public class ContactFragment extends BaseFragment implements ContactView{
     public void onInitContact(List<String> contact) {
         adapter=new ContactAdapter(contact);
         //自定义控件
+        if (contactLayout==null){
+            Log.d("ContactFragment", "onInitContact: contactLayout==null");
+        }
         contactLayout.setAdapter(adapter);
         contactLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

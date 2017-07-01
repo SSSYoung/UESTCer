@@ -12,7 +12,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.avos.avoscloud.AVUser;
 
@@ -30,8 +29,7 @@ import test.example.com.uestcer.presenter.impl.addFriendPresenterImpl;
  */
 
 public class AddFriendActivity extends BaseActivity implements addFriendView{
-    @InjectView(R.id.tv_title)
-    TextView tvTitle;
+
     @InjectView(R.id.tb_toolbar)
     Toolbar tbToolbar;
     @InjectView(R.id.rv_addfriend)
@@ -47,6 +45,9 @@ public class AddFriendActivity extends BaseActivity implements addFriendView{
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addfriend);
+
+
+        //犯得错误：要先初始化Toolbar后才能注入，不然找不到
         ButterKnife.inject(this);
         initToolbar();
         presenter=new addFriendPresenterImpl(this);
@@ -114,9 +115,9 @@ public class AddFriendActivity extends BaseActivity implements addFriendView{
     }
 
     @Override
-    public void onQuerySuccess(List<AVUser> list, List<String> users, boolean isSuccess, String errorMsg) {
+    public void onQuerySuccess(List<AVUser> list, List<String> savedUser, boolean isSuccess, String errorMsg) {
         if (isSuccess){
-            adapter.setContacts(users);
+            adapter.setContacts(savedUser);
             adapter.setUsers(list);
             adapter.notifyDataSetChanged();
             //隐藏中间的图片
