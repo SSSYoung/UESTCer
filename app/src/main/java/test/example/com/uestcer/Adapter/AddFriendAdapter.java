@@ -108,9 +108,9 @@ public class AddFriendAdapter extends RecyclerView.Adapter<AddFriendAdapter.MyVi
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            TextView tv_username = (TextView) itemView.findViewById(R.id.tv_username);
-            TextView tv_regist_time = (TextView) itemView.findViewById(R.id.tv_regist_time);
-            Button bt_add = (Button) itemView.findViewById(R.id.btn_add);
+            tv_username = (TextView) itemView.findViewById(R.id.tv_username);
+            tv_regist_time = (TextView) itemView.findViewById(R.id.tv_regist_time);
+            bt_add = (Button) itemView.findViewById(R.id.btn_add);
         }
     }
 
