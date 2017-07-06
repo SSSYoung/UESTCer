@@ -5,13 +5,17 @@ import android.app.Application;
 import android.content.pm.PackageManager;
 
 import com.avos.avoscloud.AVOSCloud;
+import com.hyphenate.EMContactListener;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMOptions;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.Iterator;
 import java.util.List;
 
 import test.example.com.uestcer.db.DBUtils;
+import test.example.com.uestcer.event.ContactChangeEvent;
 
 /**
  * Created by DK on 2017/4/27.
@@ -31,7 +35,9 @@ public class MyApplication extends Application {
 
     }
 
-
+    /**
+     *
+     */
     private void initEaseMobe() {
         EMOptions options = new EMOptions();
         // 默认添加好友时，是不需要验证的，改成需要验证
@@ -54,9 +60,42 @@ public class MyApplication extends Application {
         EMClient.getInstance().init(this, options);
         //在做打包混淆时，关闭debug模式，避免消耗不必要的资源
         EMClient.getInstance().setDebugMode(false);
+
+        //联系人的监听
+        EMClient.getInstance().contactManager().setContactListener(new EMContactListener() {
+            @Override
+            public void onContactAdded(String username) {
+                EventBus.getDefault().post(new ContactChangeEvent(username,true));
+            }
+
+            @Override
+            public void onContactDeleted(String username) {
+                //被删除时回调方法，通过eventbus发布消息
+                EventBus.getDefault().post(new ContactChangeEvent(username,false));
+            }
+
+            @Override
+            public void onContactInvited(String s, String s1) {
+
+            }
+
+            @Override
+            public void onFriendRequestAccepted(String s) {
+
+            }
+
+            @Override
+            public void onFriendRequestDeclined(String s) {
+
+            }
+        });
     }
 
-
+    /**
+     *
+     * @param pID
+     * @return
+     */
     private String getAppName(int pID) {
         String processName = null;
         ActivityManager am = (ActivityManager) this.getSystemService(ACTIVITY_SERVICE);
@@ -76,4 +115,5 @@ public class MyApplication extends Application {
         }
         return processName;
     }
+
 }

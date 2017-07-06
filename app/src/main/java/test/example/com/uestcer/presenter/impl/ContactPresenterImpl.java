@@ -1,5 +1,7 @@
 package test.example.com.uestcer.presenter.impl;
 
+import android.util.Log;
+
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.exceptions.HyphenateException;
 
@@ -78,6 +80,8 @@ public class ContactPresenterImpl implements ContactPresenter {
                             return o1.compareTo(o2);
                         }
                     });
+
+                    Log.i("contactlist", contactList.toString());
                     //更新到本地数据库
                     DBUtils.updateContactFromEMServer(EMClient.getInstance().getCurrentUser(),contactList);
                     //在UI中展示

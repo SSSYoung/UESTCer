@@ -10,10 +10,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.List;
 
 import test.example.com.uestcer.Adapter.ContactAdapter;
 import test.example.com.uestcer.R;
+import test.example.com.uestcer.event.ContactChangeEvent;
 import test.example.com.uestcer.presenter.ContactPresenter;
 import test.example.com.uestcer.presenter.impl.ContactPresenterImpl;
 import test.example.com.uestcer.utils.ToastUtils;
@@ -102,6 +107,7 @@ public class ContactFragment extends BaseFragment implements ContactView{
             adapter.setContacts(contact);
             //刷新界面
             adapter.notifyDataSetChanged();
+            Log.i("contact", contact.toString());
         }else {
             //更新联系人失败了，adapter不变，弹出提示
             ToastUtils.showToast(getActivity(),"更新联系人失败"+error);
@@ -116,7 +122,21 @@ public class ContactFragment extends BaseFragment implements ContactView{
             ToastUtils.showToast(getContext(),"删除失败"+errorMsg);
         }
     }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onGetContactChangeEvent(ContactChangeEvent event){
+        //收到了消息，联系人有变化，更新数据
+        presenter.updateContact();
+    }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
 
-
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().register(this);
+    }
 }
