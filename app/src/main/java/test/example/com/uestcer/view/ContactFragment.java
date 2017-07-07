@@ -131,12 +131,14 @@ public class ContactFragment extends BaseFragment implements ContactView{
     @Override
     public void onStart() {
         super.onStart();
+        //启动时  注册事件监听
         EventBus.getDefault().register(this);
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        EventBus.getDefault().register(this);
+        //取消事件监听
+        EventBus.getDefault().unregister(this);
     }
 }

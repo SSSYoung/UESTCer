@@ -13,6 +13,9 @@ import android.widget.TextView;
 
 import com.hyphenate.chat.EMMessage;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -119,4 +122,8 @@ public class ChatActivity extends BaseActivity implements ChatView {
         }
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    void onGetMessageEvent(List<EMMessage> messages){
+        presenter.getChatHistoryMessage(contact);
+    }
 }

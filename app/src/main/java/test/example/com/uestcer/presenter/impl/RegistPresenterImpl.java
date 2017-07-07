@@ -47,7 +47,7 @@ public class RegistPresenterImpl implements RegistPresenter {
                                     }
                                 });
                             } catch (final HyphenateException e1) {
-                                //环信没有注册成功,输出leanCloud中的数据
+                                //环信没有注册成功,删除leanCloud中的数据
                                 e1.printStackTrace();
                                 try {
                                     user.delete();

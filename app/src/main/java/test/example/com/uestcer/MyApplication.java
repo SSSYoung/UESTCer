@@ -8,6 +8,7 @@ import com.avos.avoscloud.AVOSCloud;
 import com.hyphenate.EMContactListener;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMOptions;
+import com.hyphenate.exceptions.HyphenateException;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -36,7 +37,9 @@ public class MyApplication extends Application {
     }
 
     /**
-     *
+     * 初始化环信，主要完了
+     * （1）联系人增加或删除时消息的发送，通过EventBus
+     * (2) 收到好友邀请是，直接设置为接受。
      */
     private void initEaseMobe() {
         EMOptions options = new EMOptions();
@@ -61,6 +64,7 @@ public class MyApplication extends Application {
         //在做打包混淆时，关闭debug模式，避免消耗不必要的资源
         EMClient.getInstance().setDebugMode(false);
 
+
         //联系人的监听
         EMClient.getInstance().contactManager().setContactListener(new EMContactListener() {
             @Override
@@ -75,13 +79,20 @@ public class MyApplication extends Application {
             }
 
             @Override
-            public void onContactInvited(String s, String s1) {
+            public void onContactInvited(String username, String reason) {
+                //收到好友邀请
+                try {
+                    //直接接受，不用操作
+                    EMClient.getInstance().contactManager().acceptInvitation(username);
 
+                } catch (HyphenateException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
             public void onFriendRequestAccepted(String s) {
-
+                //
             }
 
             @Override

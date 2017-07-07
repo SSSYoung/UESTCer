@@ -78,7 +78,8 @@
             android:name=".view.RegistActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".view.AddFriendActivity"></activity>
-
+        <activity android:name=".view.ChatActivity"
+            android:launchMode="singleTask"/>
 
     </application>
 
