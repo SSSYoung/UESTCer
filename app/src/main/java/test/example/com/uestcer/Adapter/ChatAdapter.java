@@ -40,7 +40,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> 
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_chat_item, parent, false);
         } else {
             //发送的消息
-            LayoutInflater.from(parent.getContext()).inflate(R.layout.list_chat_item_send, parent, false);
+            view=LayoutInflater.from(parent.getContext()).inflate(R.layout.list_chat_item_send, parent, false);
         }
         MyViewHolder holder = new MyViewHolder(view);
         return holder;

@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface ChatView  {
     /**
-     * 获取历史消息记录
+     * 获取历史消息记录,UI的展示
      * @param emMessages
      */
     void getHistoryMessage(List<EMMessage> emMessages);

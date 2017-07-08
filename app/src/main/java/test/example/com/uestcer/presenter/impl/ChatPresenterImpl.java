@@ -1,6 +1,7 @@
 package test.example.com.uestcer.presenter.impl;
 
-import com.hyphenate.EMCallBack;
+import android.util.Log;
+
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMMessage;
@@ -10,6 +11,7 @@ import java.util.List;
 
 import test.example.com.uestcer.callback.MyEMCallBack;
 import test.example.com.uestcer.presenter.ChatPresenter;
+import test.example.com.uestcer.utils.ThreadUtils;
 import test.example.com.uestcer.view.ChatView;
 
 /**
@@ -48,7 +50,9 @@ public class ChatPresenterImpl implements ChatPresenter{
             messages.clear();
             messages.addAll(emMessages);
             messages.add(lastMessage);
-
+            //打印历史聊天记录  调试信息
+            Log.i("历史聊天记录", messages.toString());
+            //测试历史聊天记录逻辑没问题，View层有问题
             chatView.getHistoryMessage(messages);
             //
         }
@@ -56,33 +60,31 @@ public class ChatPresenterImpl implements ChatPresenter{
     }
 
     @Override
-    public void sendMessage(String msgText, String contact) {
-        EMMessage message = EMMessage.createTxtSendMessage(msgText, contact);
+    public void sendMessage(final String msgText, String contact) {
+        final EMMessage message = EMMessage.createTxtSendMessage(msgText, contact);
         messages.add(message);
+
         //消息发送状态的监听
-        message.setMessageStatusCallback(new myEMCallBack() {
-            @Override
-            public void onSuccess() {
-                //发送成功或者失败都更新chatView
-                chatView.updateList();
-            }
-
-            @Override
-            public void onError(int i, String s) {
-
-            }
-
-
-        });
         message.setMessageStatusCallback(new MyEMCallBack() {
             @Override
             public void success() {
 
+                //发送成功或者失败都更新chatView
+                chatView.updateList();
+                Log.i("send successful", msgText);
             }
 
             @Override
             public void Error(int i, String s) {
-
+                //发送失败
+                chatView.updateList();
+            }
+        });
+        ThreadUtils.runOnNonUIThread(new Runnable() {
+            @Override
+            public void run() {
+                EMClient.getInstance().chatManager().sendMessage(message);
+                Log.i("run", "run: "+message.toString());
             }
         });
     }

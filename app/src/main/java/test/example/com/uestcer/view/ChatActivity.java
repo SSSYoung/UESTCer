@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -76,13 +77,15 @@ public class ChatActivity extends BaseActivity implements ChatView {
 
             }
         });
-
+        //先把适配界面设为空
         presenter=new ChatPresenterImpl(this);
         //初始化recycleview
         rvChat.setLayoutManager(new LinearLayoutManager(this));
         //先把会话设为空的
         adapter =new ChatAdapter(null);
         rvChat.setAdapter(adapter);
+        //获取历史消息，更新界面
+
         presenter.getChatHistoryMessage(contact);
 
     }
@@ -102,11 +105,15 @@ public class ChatActivity extends BaseActivity implements ChatView {
         etMessage.setText("");
     }
 
+    //ChatView的方法
     @Override
     public void getHistoryMessage(List<EMMessage> emMessages) {
+        Log.i("View层emMessages", emMessages.toString());
+
         //给适配器设置数据
         adapter.setMessages(emMessages);
 //        刷新界面
+
         adapter.notifyDataSetChanged();
         if(adapter.getItemCount()>0){
             rvChat.smoothScrollToPosition(adapter.getItemCount()-1);
