@@ -65,6 +65,7 @@ public class ChatActivity extends BaseActivity implements ChatView {
             //空消息不能发送
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Log.i("ChatActivity",s+"start:::"+start+"before:::"+before+"count:::"+count);
                 if (s.length()==0){
                     btnSend.setEnabled(false);
                 }else {
@@ -123,6 +124,7 @@ public class ChatActivity extends BaseActivity implements ChatView {
     @Override
     public void updateList() {
         // 刷新界面
+        Log.i("updateList", adapter.toString());
         adapter.notifyDataSetChanged();
         if(adapter.getItemCount()>0){
             rvChat.smoothScrollToPosition(adapter.getItemCount()-1);

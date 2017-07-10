@@ -79,7 +79,7 @@ class Slidebar extends View{
             //找到父容器
             ViewGroup parent = (ViewGroup) getParent();
             //在父容器中找到要操作的控件
-            recyclerView = (RecyclerView) parent.findViewById(R.id.recyclerView);
+            recyclerView = (RecyclerView) parent.findViewById(R.id.recyclerview);
             tv_float = (TextView) parent.findViewById(R.id.tv_float);
             adapter = (ContactAdapter) recyclerView.getAdapter();
         }

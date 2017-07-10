@@ -37,7 +37,7 @@ public class ContactLayout extends RelativeLayout{
         //加载xml文件为view对象
         View.inflate(getContext(), R.layout.contact_layout, this);
         //找到列表
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
         //找到中间显示首字母的textView
         tv_float = (TextView) findViewById(R.id.tv_float);
         //找到侧边快速滑动的菜单条

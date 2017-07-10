@@ -10,8 +10,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.ashokvarma.bottomnavigation.BadgeItem;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
+import com.hyphenate.chat.EMClient;
 
 import java.util.List;
 
@@ -29,7 +31,7 @@ public class MainActivity extends BaseActivity {
     private TextView tv_title;
     private BottomNavigationBar bottomNavigationBar;
     private String[] titles={"消息","联系人","动态"};
-
+    private BadgeItem badgeItem;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -143,6 +145,20 @@ public class MainActivity extends BaseActivity {
         }
         BaseFragment fragment = FragmentFactory.getFragment(0);
         transaction.add(R.id.fl_container,fragment).commit();
+
+    }
+    public void updateBadgeItem() {
+        //获取所有的未读条目数量
+        int unreadMessageCount = EMClient.getInstance().chatManager().getUnreadMessageCount();
+        if(unreadMessageCount==0){
+            badgeItem.hide(true);
+        }else if(unreadMessageCount>99){
+            badgeItem.show(true);
+            badgeItem.setText(String.valueOf(99));
+        }else{
+            badgeItem.show(true);
+            badgeItem.setText(String.valueOf(unreadMessageCount));
+        }
 
     }
 }
