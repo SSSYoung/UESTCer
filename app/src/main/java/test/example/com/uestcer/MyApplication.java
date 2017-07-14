@@ -2,12 +2,21 @@ package test.example.com.uestcer;
 
 import android.app.ActivityManager;
 import android.app.Application;
+import android.app.Notification;
+import android.app.PendingIntent;
+import android.content.ComponentName;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.BitmapFactory;
+import android.media.SoundPool;
 
 import com.avos.avoscloud.AVOSCloud;
 import com.hyphenate.EMContactListener;
+import com.hyphenate.EMMessageListener;
 import com.hyphenate.chat.EMClient;
+import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMOptions;
+import com.hyphenate.chat.EMTextMessageBody;
 import com.hyphenate.exceptions.HyphenateException;
 
 import org.greenrobot.eventbus.EventBus;
@@ -17,25 +26,113 @@ import java.util.List;
 
 import test.example.com.uestcer.db.DBUtils;
 import test.example.com.uestcer.event.ContactChangeEvent;
+import test.example.com.uestcer.view.ChatActivity;
 
 /**
  * Created by DK on 2017/4/27.
  */
 
 public class MyApplication extends Application {
+    private int foregoundSound;
+    private int backgoundSound;
+    private SoundPool soundPool;
     @Override
     public void onCreate() {
         super.onCreate();
         //初始化环信
         initEaseMobe();
         AVOSCloud.initialize(this,"N62I36x7Yc3QnnGppMbzynFY-gzGzoHsz","rlHHfn7aa33RKpKBVLkEWTtx");
+
         // 放在 SDK 初始化语句 AVOSCloud.initialize() 后面，只需要调用一次即可
         AVOSCloud.setDebugLogEnabled(true);
+        try {
+            final List<String> allContacts = EMClient.getInstance().contactManager().getAllContactsFromServer();
+        } catch (HyphenateException e) {
+            e.printStackTrace();
+        }
         //初始化数据库
         DBUtils.initDBUtils(this);
+        initGetMessagelistener();
+        initSoundPool();
+    }
+    private void initGetMessagelistener(){
+        EMClient.getInstance().chatManager().addMessageListener(new EMMessageListener() {
+            //收到消息时
+            @Override
+            public void onMessageReceived(List<EMMessage> list) {
+                EventBus.getDefault().post(list);
+                if (isInBackgoundState()){
+                    soundPool.play(backgoundSound,1,1,0,0,1);
+                    //发送通知
+                    sendNotification(list.get(0));
+                }else {
+                    soundPool.play(foregoundSound,1,1,0,0,1);
+                }
+            }
+            //如果实在后台，发送通知
 
+            @Override
+            public void onCmdMessageReceived(List<EMMessage> list) {
+
+            }
+
+            @Override
+            public void onMessageRead(List<EMMessage> list) {
+
+            }
+
+            @Override
+            public void onMessageDelivered(List<EMMessage> list) {
+
+            }
+
+            @Override
+            public void onMessageChanged(EMMessage emMessage, Object o) {
+
+            }
+        });
     }
 
+    private void sendNotification(EMMessage emMessage) {
+        Notification.Builder builder = new Notification.Builder(getApplicationContext());
+        //点击通知后主动消失
+        builder.setAutoCancel(true);
+        //设置通知的小图标
+        builder.setSmallIcon(R.mipmap.message);
+        builder.setContentTitle("新消息");
+        //消息的内容
+        EMTextMessageBody body= (EMTextMessageBody) emMessage.getBody();
+        //把消息的内容设置到通知的内容
+        builder.setContentTitle(body.getMessage());
+        //设置大图标
+        builder.setLargeIcon(BitmapFactory.decodeResource(getResources(),R.mipmap.avatar3));
+        builder.setContentInfo("来自"+ emMessage.getUserName());
+        //创建要打开的activity对应的意图
+        Intent mainActivityIntent = new Intent(getApplicationContext(), MainActivity.class);
+        Intent chatActivityIntent = new Intent(getApplicationContext(), ChatActivity.class);
+        chatActivityIntent.putExtra("contact",emMessage.getUserName());
+        Intent[] intents = new Intent[]{mainActivityIntent, chatActivityIntent};
+        PendingIntent.getActivity()
+    }
+
+    /**
+     * 判断当前的应用是否在后台状态
+     * @return 后台返回true，返回false应用前台
+     */
+    private boolean isInBackgoundState(){
+        ActivityManager manager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+        //通过ActivityManager 获取正在运行的 任务信息
+        List<ActivityManager.RunningTaskInfo> runningTasks = manager.getRunningTasks(50);
+        //获取第一个activity栈的信息
+        ActivityManager.RunningTaskInfo runningTaskInfo = runningTasks.get(0);
+        //获取栈中的栈顶activity  根据activity的包名判断 是否是当前应用的包名
+        ComponentName componentName = runningTaskInfo.topActivity;
+        if (componentName.getPackageName().equals(getPackageName())){
+            return false;
+        }else {
+            return true;
+        }
+    }
     /**
      * 初始化环信，主要完了
      * （1）联系人增加或删除时消息的发送，通过EventBus
