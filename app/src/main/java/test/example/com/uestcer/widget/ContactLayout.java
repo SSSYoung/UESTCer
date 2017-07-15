@@ -56,7 +56,7 @@ public class ContactLayout extends RelativeLayout{
     }
 
     /**
-     * 给recyclerView设置适配器
+     * 给联系人recyclerView设置适配器
      * @param adapter
      */
     public void setAdapter(RecyclerView.Adapter adapter){
@@ -64,10 +64,18 @@ public class ContactLayout extends RelativeLayout{
         recyclerView.setAdapter(adapter);
     }
 
+    /**
+     * 设置下拉刷新listener
+     * @param listener
+     */
     public void setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener listener){
         swipeRefreshLayout.setOnRefreshListener(listener);
     }
 
+    /**
+     *
+     * @param isRefreshing
+     */
     public void setRefreshing(boolean isRefreshing){
         swipeRefreshLayout.setRefreshing(isRefreshing);
     }

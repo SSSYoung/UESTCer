@@ -56,12 +56,13 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
         String message = textMessageBody.getMessage();
         //获取未读消息数量
         int unreadMsgCount = emConversation.getUnreadMsgCount();
-
+        //设置每个item
         holder.tv_username.setText(userName);
         holder.tv_msg.setText(message);
         holder.tv_time.setText(DateUtils.getTimestampString(new Date(lastMessage.getMsgTime())));
 
         if(unreadMsgCount==0){
+            //没有未读消息，悬浮按钮隐藏
             holder.tv_unread.setVisibility(View.GONE);
         }else if(unreadMsgCount>99){
             holder.tv_unread.setText(String.valueOf(99));
@@ -70,6 +71,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
             holder.tv_unread.setText(String.valueOf(unreadMsgCount));
             holder.tv_unread.setVisibility(View.VISIBLE);
         }
+        //初始化每个item的点击监听响应
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,10 +102,11 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
 
         }
     }
-
+    //点击条目的监听响应接口，不实现
     public interface onAddItemClickListener{
         void onConversationClick(View v, String username);
     }
+    //item点击的监听类
     private onAddItemClickListener listener;
 
     public void setOnItemClickListener(onAddItemClickListener listener){

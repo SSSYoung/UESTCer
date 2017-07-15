@@ -9,6 +9,10 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 
 public class ContactOpenHelper extends SQLiteOpenHelper {
+    /**
+     * 初始化创建一个名为contact.db的数据库
+     * @param context
+     */
     public ContactOpenHelper(Context context){
         super(context,"contact.db",null,1);
     }

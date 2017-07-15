@@ -52,9 +52,11 @@ public class ConversationFragment extends BaseFragment implements ConversationVi
             }
         });
         adapter=new ConversationAdapter(null);
+        //实现每个条目的具体点击事件
         adapter.setOnItemClickListener(new ConversationAdapter.onAddItemClickListener() {
             @Override
             public void onConversationClick(View v, String username) {
+                //跳转到聊天ChatActivity
                 Intent intent = new Intent(getContext(),ChatActivity.class);
                 intent.putExtra("contact",username);
                 startActivity(intent);

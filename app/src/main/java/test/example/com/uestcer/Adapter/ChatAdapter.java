@@ -2,6 +2,7 @@ package test.example.com.uestcer.Adapter;
 
 import android.graphics.drawable.AnimationDrawable;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,14 +37,15 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> 
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = null;
         if (viewType == 0) {
+            Log.d("direction", String.valueOf(viewType));
             //收到的消息
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_chat_item, parent, false);
         } else {
+            Log.d("direction", String.valueOf(viewType));
             //发送的消息
             view=LayoutInflater.from(parent.getContext()).inflate(R.layout.list_chat_item_send, parent, false);
         }
-        MyViewHolder holder = new MyViewHolder(view);
-        return holder;
+        return new MyViewHolder(view);
     }
 
     @Override

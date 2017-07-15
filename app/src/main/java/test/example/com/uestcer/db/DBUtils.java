@@ -13,7 +13,7 @@ import java.util.List;
  */
 
 public class DBUtils {
-
+    //
     private static Context context = null;
 
     /**
@@ -27,12 +27,13 @@ public class DBUtils {
     /**
      *  初始化联系人，在数据库里面先去取
      * @param username 登录的用户名
-     * @return
+     * @return 所有联系人的用户名
      */
     public static List<String> initContact(String username){
         List<String> result=new ArrayList<>();
         //上下文为空，抛出异常,初始化在使用
         if (context==null){
+            //调用时没用initDBUtils初始化抛出异常
             throw new RuntimeException("先初始化后再调用");
         }else {
             //创建sqliteopenhelper对象
@@ -55,7 +56,7 @@ public class DBUtils {
     }
 
     /**
-     * 吧从环信取得的联系人数据保存到Android手机的数据库中
+     * 把从环信取得的联系人数据保存到Android手机的数据库中
      * @param username 当前的用户名
      * @param contacts  该用户从环信请求到的联系人的集合
      */

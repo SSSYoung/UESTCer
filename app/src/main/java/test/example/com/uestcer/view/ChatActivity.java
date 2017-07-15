@@ -47,6 +47,8 @@ public class ChatActivity extends BaseActivity implements ChatView {
     private String contact;    //當前正在聊天的聯繫人
     private ChatPresenter presenter;
     private ChatAdapter adapter;
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
