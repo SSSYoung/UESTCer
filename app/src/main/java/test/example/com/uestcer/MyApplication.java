@@ -3,21 +3,26 @@ package test.example.com.uestcer;
 import android.app.ActivityManager;
 import android.app.Application;
 import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
+import android.media.AudioManager;
 import android.media.SoundPool;
 
 import com.avos.avoscloud.AVOSCloud;
+import com.hyphenate.EMConnectionListener;
 import com.hyphenate.EMContactListener;
+import com.hyphenate.EMError;
 import com.hyphenate.EMMessageListener;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMOptions;
 import com.hyphenate.chat.EMTextMessageBody;
 import com.hyphenate.exceptions.HyphenateException;
+import com.hyphenate.util.NetUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -26,6 +31,8 @@ import java.util.List;
 
 import test.example.com.uestcer.db.DBUtils;
 import test.example.com.uestcer.event.ContactChangeEvent;
+import test.example.com.uestcer.event.ExitEvent;
+import test.example.com.uestcer.utils.ThreadUtils;
 import test.example.com.uestcer.view.ChatActivity;
 
 /**
@@ -92,6 +99,11 @@ public class MyApplication extends Application {
             }
         });
     }
+    private void initSoundPool(){
+        soundPool=new SoundPool(2, AudioManager.STREAM_MUSIC,0);
+        foregoundSound = soundPool.load(getApplicationContext(), R.raw.duan, 1);
+        backgoundSound = soundPool.load(getApplicationContext(),R.raw.yulu,1);
+    }
 
     private void sendNotification(EMMessage emMessage) {
         Notification.Builder builder = new Notification.Builder(getApplicationContext());
@@ -112,7 +124,14 @@ public class MyApplication extends Application {
         Intent chatActivityIntent = new Intent(getApplicationContext(), ChatActivity.class);
         chatActivityIntent.putExtra("contact",emMessage.getUserName());
         Intent[] intents = new Intent[]{mainActivityIntent, chatActivityIntent};
-        PendingIntent.getActivity()
+        //点击通知的延迟意图，用来处理通知的点击事件
+        PendingIntent pendingIntent = PendingIntent.getActivities(getApplicationContext(), 1, intents, PendingIntent.FLAG_UPDATE_CURRENT);
+        //设置通知点击事件
+        builder.setContentIntent(pendingIntent);
+
+        Notification notification = builder.build();
+        NotificationManager manager= (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        manager.notify(1,notification);
     }
 
     /**
@@ -223,5 +242,33 @@ public class MyApplication extends Application {
         }
         return processName;
     }
+    //ConnectionListener接口
+    private class Myconnectionlistener implements EMConnectionListener{
+        @Override
+        public void onConnected() {
 
+        }
+
+        @Override
+        public void onDisconnected(final int error) {
+            ThreadUtils.runOnMainThread(new Runnable() {
+                @Override
+                public void run() {
+                    if (error== EMError.USER_REMOVED){
+                        //显示账号被移除
+                        EventBus.getDefault().post(new ExitEvent(EMError.USER_REMOVED));
+                    }else if (error==EMError.USER_LOGIN_ANOTHER_DEVICE){
+                        //显示设备在其他设备登录
+                        EventBus.getDefault().post(new ExitEvent(EMError.USER_LOGIN_ANOTHER_DEVICE));
+                    }else {
+                        if (NetUtils.hasNetwork(getApplicationContext())){
+                            //连接不到聊天服务器
+                        }else {
+                            //当前网络不可用，请检查网络设置
+                        }
+                    }
+                }
+            });
+        }
+    }
 }
