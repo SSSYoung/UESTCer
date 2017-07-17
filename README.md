@@ -9,7 +9,7 @@
 
 ## 主界面由“消息”，“联系人”，和“动态”三个Fragment切换组成。
 
-![image](https://github.com/genjiyang/UESTCer/blob/master/README/ConversationFragment.jpg)
+
 
 ## 1."消息"Fragment，可以展示多条于不同联系人的会话。
 
