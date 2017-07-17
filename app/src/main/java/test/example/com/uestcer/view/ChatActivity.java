@@ -58,6 +58,7 @@ public class ChatActivity extends BaseActivity implements ChatView {
         //getIntent(), Return the intent that started this activity.
         contact = getIntent().getStringExtra("contact");
         tvTitle.setText("与"+contact+"聊天中");
+        btnSend.setEnabled(false);
 
         etMessage.addTextChangedListener(new TextWatcher() {
             @Override
@@ -110,8 +111,8 @@ public class ChatActivity extends BaseActivity implements ChatView {
 
     //ChatView的方法
     @Override
-    public void getHistoryMessage(List<EMMessage> emMessages) {
-        Log.i("View层emMessages", emMessages.toString());
+    public void onGetHistoryMessage(List<EMMessage> emMessages) {
+        Log.i("View层getHistoryMessage", emMessages.toString());
 
         //给适配器设置数据
         adapter.setMessages(emMessages);

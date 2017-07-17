@@ -51,9 +51,9 @@ public class ChatPresenterImpl implements ChatPresenter{
             messages.addAll(emMessages);
             messages.add(lastMessage);
             //打印历史聊天记录  调试信息
-            Log.i("历史聊天记录", messages.toString());
+            Log.i("getChatHistoryMessage", messages.toString());
             //测试历史聊天记录逻辑没问题，View层有问题
-            chatView.getHistoryMessage(messages);
+            chatView.onGetHistoryMessage(messages);
             //
         }
         return messages;

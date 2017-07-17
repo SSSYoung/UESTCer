@@ -13,7 +13,7 @@ public interface ChatView  {
      * 获取历史消息记录,UI的展示
      * @param emMessages
      */
-    void getHistoryMessage(List<EMMessage> emMessages);
+    void onGetHistoryMessage(List<EMMessage> emMessages);
 
     //更新消息列表
     void updateList();
