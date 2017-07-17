@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.hyphenate.chat.EMMessage;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -133,9 +134,23 @@ public class ChatActivity extends BaseActivity implements ChatView {
             rvChat.smoothScrollToPosition(adapter.getItemCount()-1);
         }
     }
+    //注册EventBus
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     void onGetMessageEvent(List<EMMessage> messages){
+        //没进来都
+        Log.i("onGetMessageEvent", "订阅消息成功");
         presenter.getChatHistoryMessage(contact);
     }
 }

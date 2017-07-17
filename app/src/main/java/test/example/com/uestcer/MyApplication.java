@@ -11,6 +11,7 @@ import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.media.AudioManager;
 import android.media.SoundPool;
+import android.util.Log;
 
 import com.avos.avoscloud.AVOSCloud;
 import com.hyphenate.EMConnectionListener;
@@ -67,7 +68,10 @@ public class MyApplication extends Application {
             //收到消息时
             @Override
             public void onMessageReceived(List<EMMessage> list) {
+
                 EventBus.getDefault().post(list);
+                Log.i("EventBus post", "EventBus post");
+
                 if (isInBackgoundState()){
                     soundPool.play(backgoundSound,1,1,0,0,1);
                     //发送通知
