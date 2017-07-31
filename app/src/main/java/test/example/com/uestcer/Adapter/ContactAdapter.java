@@ -90,6 +90,17 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHo
                 }
             }
         });
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (onItemClickListener!=null){
+                    onItemClickListener.onLongClick(v,contact);
+                    return true;
+                }
+                return false;
+            }
+
+        });
     }
 
     /**

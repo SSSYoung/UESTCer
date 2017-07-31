@@ -68,6 +68,7 @@ public class ContactFragment extends BaseFragment implements ContactView{
         if (contactLayout==null){
             Log.d("ContactFragment", "onInitContact: contactLayout==null");
         }
+        //自定义的方法
         contactLayout.setAdapter(adapter);
         contactLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -87,6 +88,7 @@ public class ContactFragment extends BaseFragment implements ContactView{
             //长按删除此联系人
             @Override
             public boolean onLongClick(View v, final String contactName) {
+                Log.d("onLongClick:", "onLongClick: ");
                 Snackbar.make(contactLayout,"真的要删除"+contactName+"吗?",Snackbar.LENGTH_LONG)
                         .setAction("确认", new View.OnClickListener() {
                             @Override

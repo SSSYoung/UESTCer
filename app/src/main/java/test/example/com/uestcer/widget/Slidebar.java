@@ -78,7 +78,7 @@ class Slidebar extends View{
         if(tv_float == null){
             //找到父容器
             ViewGroup parent = (ViewGroup) getParent();
-            //在父容器中找到要操作的控件
+            //在父容器中找到要操作的联系人的空间
             recyclerView = (RecyclerView) parent.findViewById(R.id.recyclerview);
             tv_float = (TextView) parent.findViewById(R.id.tv_float);
             adapter = (ContactAdapter) recyclerView.getAdapter();
@@ -114,6 +114,10 @@ class Slidebar extends View{
         return true;
     }
 
+    /**
+     * 根据选中的首字母，让联系人列表平滑的滚动到对应的位置
+     * @param startChar
+     */
     private void scrollRecyclerView(String startChar) {
         //获取recyclerview展示的所有文字的集合
         List<String> contacts = adapter.getContacts();
@@ -128,6 +132,11 @@ class Slidebar extends View{
         }
     }
 
+    /**
+     * 根据文字的高度，可以计算出slidebar点击的是数值的index
+     * @param y
+     * @return
+     */
     int getIndex(float y){
         //每一个文字占多高
         int sectionHeight = viewHeight/sections.length;

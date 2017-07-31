@@ -29,6 +29,7 @@ public class ContactLayout extends RelativeLayout{
 
     public ContactLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
+        //初始化contactLayout各子控件的布局
         initView();
 
     }
