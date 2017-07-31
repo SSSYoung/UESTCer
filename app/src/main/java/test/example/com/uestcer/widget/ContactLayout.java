@@ -67,7 +67,7 @@ public class ContactLayout extends RelativeLayout{
 
     /**
      * 设置下拉刷新listener
-     * @param listener
+     * @param listener 传一个实现了下拉刷新逻辑的接口实现类
      */
     public void setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener listener){
         swipeRefreshLayout.setOnRefreshListener(listener);

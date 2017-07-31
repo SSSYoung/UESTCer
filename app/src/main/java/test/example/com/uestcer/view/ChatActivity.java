@@ -57,8 +57,10 @@ public class ChatActivity extends BaseActivity implements ChatView {
         ButterKnife.inject(this);
         initToolbar();
         //getIntent(), Return the intent that started this activity.
+        //从联系人界面或对话界面跳转到这儿
         contact = getIntent().getStringExtra("contact");
         tvTitle.setText("与"+contact+"聊天中");
+        //没有内容是按钮不能按
         btnSend.setEnabled(false);
 
         etMessage.addTextChangedListener(new TextWatcher() {

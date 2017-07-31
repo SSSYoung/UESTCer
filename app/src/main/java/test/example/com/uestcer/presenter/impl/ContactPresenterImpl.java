@@ -77,6 +77,7 @@ public class ContactPresenterImpl implements ContactPresenter {
                     Collections.sort(contactList, new Comparator<String>() {
                         @Override
                         public int compare(String o1, String o2) {
+                            //就按照String自己的Comparable接口排
                             return o1.compareTo(o2);
                         }
                     });

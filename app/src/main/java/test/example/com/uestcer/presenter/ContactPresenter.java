@@ -1,7 +1,7 @@
 package test.example.com.uestcer.presenter;
 
 /**
- * Created by fullcircle on 2017/1/3.
+ * Created by oo on 2017/5/30.
  */
 
 public interface ContactPresenter {
@@ -12,9 +12,7 @@ public interface ContactPresenter {
     //删除联系人
     void deleteContact(String username);
 
-    /**
-     * Created by oo on 2017/6/30.
-     */
+
 
 
 }

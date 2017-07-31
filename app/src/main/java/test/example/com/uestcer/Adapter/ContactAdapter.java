@@ -33,7 +33,9 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHo
     private OnItemClickListener onItemClickListener;
 
     /**
-     * 内部接口，抽象方法，实现点击，长按事件
+     * 通过一个内部接口，吧要实现的方法暴露出来
+     *
+     * 自定义内部接口，抽象方法，实现点击，长按事件
      */
     public interface OnItemClickListener {
         void onclick(View v,String username);
@@ -80,12 +82,14 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHo
                 holder.tv_section.setVisibility(View.VISIBLE);
             }
         }
-        //绑定控件时
+
+        //绑定控件时，就设置点击事件
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 if(onItemClickListener!=null){
+                    //具体的实现逻辑并不写出来，而是调用接口里的click和longclick方法
                     onItemClickListener.onclick(v,contact);
                 }
             }
@@ -105,7 +109,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHo
 
     /**
      * 设置onItemClickListener
-     * @param onItemClickListener 要实现接口中方法的onItemClickListener的实现类
+     * @param onItemClickListener 传递一个接口，自然要实现里面的方法，所以谁调用，谁实现
      */
     public void setOnItemClickListener(OnItemClickListener onItemClickListener){
         this.onItemClickListener=onItemClickListener;

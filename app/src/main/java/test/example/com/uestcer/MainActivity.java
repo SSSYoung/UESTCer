@@ -158,9 +158,13 @@ public class MainActivity extends BaseActivity {
 
     }
 
+    /**
+     * 更新未读消息的BadgeItem的标识
+     */
     public void updateBadgeItem() {
         //获取所有的未读条目数量
         int unreadMessageCount = EMClient.getInstance().chatManager().getUnreadMessageCount();
+        //根据未读消息
         if (unreadMessageCount == 0) {
             badgeItem.hide(true);
         } else if (unreadMessageCount > 99) {

@@ -59,7 +59,7 @@ public class ContactFragment extends BaseFragment implements ContactView{
 
     /**
      * 初始化联系人的View
-     * @param contact
+     * @param contact 所有的联系人用户名
      */
     @Override
     public void onInitContact(List<String> contact) {
@@ -76,6 +76,7 @@ public class ContactFragment extends BaseFragment implements ContactView{
                 presenter.updateContact();
             }
         });
+        //设置联系人条目的单击和长按事件
         adapter.setOnItemClickListener(new ContactAdapter.OnItemClickListener() {
             @Override
             //单击和该联系人聊天
@@ -100,6 +101,7 @@ public class ContactFragment extends BaseFragment implements ContactView{
             }
         });
     }
+
 
     @Override
     public void onUpdateContact(List<String> contact, boolean isUpdateSuccess ,String error) {

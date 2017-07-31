@@ -107,6 +107,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> 
      * @param position
      * @return 收到的消息用0标记，发送的消息用1标记
      */
+
     @Override
     public int getItemViewType(int position) {
         EMMessage message = messages.get(position);

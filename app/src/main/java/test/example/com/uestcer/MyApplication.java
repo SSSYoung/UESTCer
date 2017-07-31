@@ -60,6 +60,7 @@ public class MyApplication extends Application {
         }
         //初始化数据库
         DBUtils.initDBUtils(this);
+        //初始化即时消息的监听
         initGetMessagelistener();
         initSoundPool();
     }

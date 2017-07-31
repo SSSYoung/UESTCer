@@ -8,9 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by fullcircle on 2017/1/3.
- */
+
 
 public class DBUtils {
     //
@@ -36,7 +34,7 @@ public class DBUtils {
             //调用时没用initDBUtils初始化抛出异常
             throw new RuntimeException("先初始化后再调用");
         }else {
-            //创建sqliteopenhelper对象
+            //创建sqliteopenhelper对象,数据库名称为contact.db，版本号为1
             ContactOpenHelper openHelper = new ContactOpenHelper(context);
             SQLiteDatabase db = openHelper.getReadableDatabase();
             Cursor cursor = db.query("contact_info",
