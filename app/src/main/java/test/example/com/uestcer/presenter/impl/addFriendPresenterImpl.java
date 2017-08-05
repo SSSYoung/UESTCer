@@ -20,10 +20,10 @@ import test.example.com.uestcer.view.addFriendView;
  * Created by oo on 2017/6/29.
  */
 
-public class addFriendPresenterImpl implements AddFriendPresenter {
+public class AddFriendPresenterImpl implements AddFriendPresenter {
     private addFriendView addFriendView;
 
-    public addFriendPresenterImpl(addFriendView addFriendView) {
+    public AddFriendPresenterImpl(addFriendView addFriendView) {
         this.addFriendView = addFriendView;
     }
 

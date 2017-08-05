@@ -32,6 +32,7 @@ public class ConversationPresenterImpl implements ConversationPresenter {
         List<EMConversation> conversationList = new ArrayList<>(values);
         //根据最近收到的消息时间的顺序对会话进行排序
         Collections.sort(conversationList, new Comparator<EMConversation>() {
+            //从上往下对话时间越来越远
             @Override
             public int compare(EMConversation o1, EMConversation o2) {
                 return (int) (o2.getLastMessage().getMsgTime()-o1.getLastMessage().getMsgTime());

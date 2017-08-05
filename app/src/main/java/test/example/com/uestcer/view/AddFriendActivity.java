@@ -22,7 +22,7 @@ import butterknife.InjectView;
 import test.example.com.uestcer.Adapter.AddFriendAdapter;
 import test.example.com.uestcer.R;
 import test.example.com.uestcer.presenter.AddFriendPresenter;
-import test.example.com.uestcer.presenter.impl.addFriendPresenterImpl;
+import test.example.com.uestcer.presenter.impl.AddFriendPresenterImpl;
 
 /**
  * Created by DK on 2017/5/6.
@@ -50,7 +50,7 @@ public class AddFriendActivity extends BaseActivity implements addFriendView{
         //犯得错误：要先初始化Toolbar后才能注入，不然找不到
         ButterKnife.inject(this);
         initToolbar();
-        presenter=new addFriendPresenterImpl(this);
+        presenter=new AddFriendPresenterImpl(this);
     }
 
     private void initToolbar() {
